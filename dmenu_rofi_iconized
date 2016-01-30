@@ -1,0 +1,125 @@
+
+#!/bin/bash
+
+# Originally based on code by Dieter Plaetinck.
+# Pretty much re-written by Mina Nagy (mnzaki)
+# Edited by Chrysostomus to create/source .dmenurc
+
+if ! [ -f "$HOME/.dmenurc" ]; then
+    cp /usr/share/dmenu/dmenurc $HOME/.dmenurc
+fi
+. $HOME/.dmenurc
+
+if [ -z "$TERMINAL_CMD" ]; then
+  if [ "$(which terminal)" ]; then
+  TERMINAL_CMD="terminal -e"
+  elif [ "$(which urxvt)" ]; then
+  TERMINAL_CMD="urxvt -e"
+  elif [ "$(which termite)" ]; then
+  TERMINAL_CMD="termite -e"
+  elif [ "$(which terminator)" ]; then
+  TERMINAL_CMD="terminator -e"
+  elif [ "$(which gnome-terminal)" ]; then
+  TERMINAL_CMD="gnome-terminal -e"
+  elif [ "$(which lxterminal)" ]; then
+  TERMINAL_CMD="lxterminal -e"
+  elif [ "$(which sakura)" ]; then
+  TERMINAL_CMD="sakura -e"
+  elif [ "$(which xfce4-terminal)" ]; then
+  TERMINAL_CMD="xfce4-terminal -e"
+  elif [ "$(which xterm)" ]; then
+  TERMINAL_CMD="xterm -e"
+  fi
+fi
+
+OUTPUT=$(i3-msg -t get_workspaces | jq -r 'map(select(.focused))[0].output')
+FOCUSED=$(xprop -root _NET_ACTIVE_WINDOW | awk -F' ' '{print $NF}')
+
+if xprop -id ${FOCUSED} _NET_WM_STATE | grep -q "_NET_WM_STATE_FULLSCREEN"; then
+    dmenu_cmd="rofi -dmenu -lines 5 -fullscreen -padding 342"
+    type_cmd=$dmenu_cmd
+else
+    if [ $OUTPUT == "DVI-1" ]; then
+        dmenu_cmd="rofi -dmenu -lines 16 -padding 333 -location 2 -width 100"
+        type_cmd="rofi -dmenu -lines 16 -fullscreen -padding 333"
+    else
+        dmenu_cmd="rofi -dmenu -lines 5 -padding 348 -location 2 -width 100"
+        type_cmd="rofi -dmenu -lines 5 -padding 408 -location 2 -width 100"
+    fi
+fi
+
+
+max_recent=199 # Number of recent commands to track
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/dmenu-recent"
+recent_cache="$cache_dir/recent"
+rest_cache="$cache_dir/all"
+known_types=" background terminal terminal_hold "
+
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/dmenu-recent"
+type_dir="$config_dir/types"
+mkdir -p "$cache_dir"
+mkdir -p "$type_dir"
+touch "$recent_cache"
+
+# Without this, it won't remember $type
+GREP_OPTIONS='--color=never'
+
+IFS=:
+if stest -dqr -n "$rest_cache" $PATH 2>/dev/null; then
+     stest -flx $PATH | sort -u | grep -vf "$recent_cache" > "$rest_cache"
+fi
+
+IFS=" "
+sedcom_b="/^\\($(cat $type_dir/background | sed ':a;N;$!ba;s/\n/\\|/g')\\)/ s/^/    /"
+sedcom_t="/^\\($(cat $type_dir/terminal $type_dir/terminal_hold | sed ':a;N;$!ba;s/\n/\\|/g')\\)/ s/^/    /"
+cmd=$(cat "$recent_cache" "$rest_cache" | sed "$sedcom_t" | sed "$sedcom_b" | sed '/^[^ ]/ s/^/      /' | $dmenu_cmd -p "  Run:" "$@" | sed 's/^[ ]\+//')
+if [ -n "$cmd" ]; then
+  if ! grep -qx "$cmd" "$recent_cache" &> /dev/null; then
+      grep -vx "$cmd" "$rest_cache" > "$rest_cache.$$"
+      mv "$rest_cache.$$" "$rest_cache"
+  fi
+
+  # Figure out how to run the command based on the command name, disregarding
+  # arguments, if any.
+  cmd=${cmd## }
+  word0=${cmd%% *}
+  match="^$word0$"
+
+  echo "$word0" > "$recent_cache.$$"
+  grep -vx "$word0" "$recent_cache" | head -n "$max_recent" >> "$recent_cache.$$"
+  mv "$recent_cache.$$"  "$recent_cache"
+
+  get_type () {
+      while type=$(echo $known_types | xargs -n1 | sed 's/^/      /' | $type_cmd -p "  Type:" | sed 's/^[ ]\+//'); do
+          [[ $known_types =~ " $type " ]] || continue
+          echo "$word0" >> "$type_dir/$type"
+          break
+      done
+      echo $type
+  }
+
+  if ! type=$(grep -lx "$match" -R "$type_dir"); then
+      type=$(get_type)
+  else 
+      type=${type##*/}
+      if ! [[ $known_types =~ " $type " ]]; then
+          rm "$type_dir/$type"
+          type=$(get_type)
+      fi
+  fi
+
+  #if t=$(cat $config_dir/dark | grep -x $match); then
+  #  echo "Should use dark theme"
+  #  cmd="env GTK2_RC_FILES=/home/peter/.themes/FlatStudioDark-recolour/gtk-2.0/gtkrc $cmd"
+  #  echo "\"$cmd\""
+  #fi
+  if t=$(cat $config_dir/quirks | grep -e "^$word0:"); then
+    cmd="${t:${#word0}+1} $cmd"
+  fi
+
+  [[ "$type" = "background" ]] && exec $cmd
+  [[ "$type" = "terminal" ]] && exec $TERMINAL_CMD "$cmd"
+  [[ "$type" = "terminal_hold" ]] &&
+      exec $TERMINAL_CMD sh -c "$cmd && echo Press Enter to kill me... && read line"
+fi
