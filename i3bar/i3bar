@@ -1,0 +1,17 @@
+bar {
+    tray_output DVI-0
+    status_command /home/peter/.i3/conky_wrapper #i3status -c /home/peter/.i3/i3status.conf
+    wheel_up_cmd nop
+    wheel_down_cmd nop
+    font pango:M+ 2p, Regular 9
+    colors {
+        background #282828
+        statusline #DDDDDD
+        separator #282828
+        active_workspace #89816D #282828 #89816D
+        binding_mode #2F343A #900000 #FFFFFF
+        focused_workspace #86A4DB #83A0D3 #282828
+        urgent_workspace #89816D #900000 #FFFFFF
+        inactive_workspace #282828 #282828 #89816D
+    }
+}

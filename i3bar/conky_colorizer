@@ -1,0 +1,34 @@
+#!/bin/sh
+Colour () {
+	MIN=$1
+	MAX=$2
+	VALUE=$3
+	if [ "$VALUE" -lt "$MIN" ] ; then
+	GRADIENT=0
+	elif [ "$VALUE" -gt "$MAX" ] ; then
+	GRADIENT=100
+	else
+	GRADIENT=$(bc<<<"scale=2;($VALUE - $MIN)*100/($MAX - $MIN)")
+	fi
+	let GREEN=$(bc<<<"160-(($GRADIENT*160)/100)")
+	let BLUE=$(bc<<<"211-(($GRADIENT*211)/100)")
+	let RED=$(bc<<<"131+($GRADIENT*13)/100")
+	echo $(printf "%02x\n" $RED)$(printf "%02x\n" $GREEN)$(printf "%02x\n" $BLUE)
+}
+while read teststring; do
+	CPU="${teststring#*  }"
+	CPU="${CPU%\%*}"
+	TEMPERATURE="${teststring#*  }"
+	TEMPERATURE="${TEMPERATURE%°*}"
+	MEMORY="${teststring#*MEMCOLOUR}"
+	MEMORY="${MEMORY%!*}"
+
+	CPU_HEX=$(Colour 0 20 $CPU)
+	MEM_HEX=$(Colour 10 100 $MEMORY)
+	TEM_HEX=$(Colour 35 60 $TEMPERATURE)
+
+	teststring="${teststring/CPUCOLOUR/#$CPU_HEX}"
+	teststring="${teststring/MEMCOLOUR$MEMORY!/#$MEM_HEX}"
+	teststring="${teststring/TEMPERATURECOLOUR/#$TEM_HEX}"
+	echo $teststring
+done
