@@ -9,7 +9,8 @@ copy_config() {
     echo "$here"
     if [[ "$backup" =~ ^"$here".* ]]; then
       config="$HOME/${backup#"$here"}"
-      rm "$config" &&
+      mkdir -p "$(dirname "$here/backup/${backup#"$here"}")" &&
+      mv "$config" "$here/backup/${backup#"$here"}" &&
       ln -s "$backup" "$config" &&
       echo "Succesfully copied and linked config file" ||
       (echo "Unable to copy and link file!"; exit 4)
