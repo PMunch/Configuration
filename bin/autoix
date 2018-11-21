@@ -1,0 +1,1 @@
+xclip -o -selection -primary | curl -F 'f:1=<-' ix.io | head -c-1 | echo "$(< /dev/stdin)/" | xclip -i -selection clipboard

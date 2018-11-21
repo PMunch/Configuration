@@ -1,0 +1,2 @@
+#!/bin/bash
+dircolors -p | grep -v "^TERM" | grep -v "^ *#" | grep -v "^\." | awk '{split($0,a," "); print "\033[" a[2] "m" a[1] "\033[0m" " (" a[1] ")"}'

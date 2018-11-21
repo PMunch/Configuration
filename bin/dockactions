@@ -1,0 +1,12 @@
+#!/bin/bash
+export DISPLAY=:0
+export XAUTHORITY=/home/peter/.Xauthority
+
+DOCKSTATUS=$(cat /sys/devices/platform/fujitsu-laptop/dock)
+if [ "$DOCKSTATUS" = "docked" ]; then
+	#xrandr --output DP-1-1 --auto --pos 1920x-950 --primary --output DP-2 --auto --right-of DP-1-1 --output eDP-1 --auto
+  xrandr --output eDP-1 --auto --pos -1700x1200 --output DP-1-1 --auto --primary --pos 0x0 --output DP-2 --auto --right-of DP-1-1
+fi
+if [ "$DOCKSTATUS" = "undocked" ]; then
+	xrandr --output DP-1-1 --off --output DP-2 --off --output eDP-1 --auto --primary
+fi
