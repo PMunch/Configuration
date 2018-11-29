@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ $# != 1 ]; then
+  echo "Usage: up <file> # Uploads a file to peterme.net uploads folder"
+  exit 1
+fi
+scp "$1" ubuntu@peterme.net:uploads
+echo "File uploaded to https://uploads.peterme.net/$(basename $1)"

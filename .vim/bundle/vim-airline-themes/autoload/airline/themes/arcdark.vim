@@ -8,7 +8,7 @@ let s:cterm_med_gray_lo = 237
 let s:gui_light_gray = '#b2b2b2'
 let s:cterm_light_gray = 249
 let s:gui_green = '#afd787'
-let s:cterm_green = 14 " 150
+let s:cterm_green = 14
 let s:gui_blue = '#87afd7'
 let s:cterm_blue = 2
 let s:gui_purple = '#afafd7'
@@ -16,7 +16,7 @@ let s:cterm_purple = 5
 let s:gui_orange = '#d7af5f'
 let s:cterm_orange = 3
 let s:gui_red = '#d78787'
-let s:cterm_red = 1
+let s:cterm_red = 9
 let s:gui_pink = '#d7afd7'
 let s:cterm_pink = 13
 

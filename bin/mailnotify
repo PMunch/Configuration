@@ -1,8 +1,0 @@
-#!/bin/bash
-
-offlineimap &
-
-inotifywait -m /home/peter/.mail/work/INBOX/new -e create -e moved_to |
-    while read path action file; do
-        notify-send -a "Mail" "You've got mail!"
-    done

@@ -1,0 +1,10 @@
+if [ $1 = left ]
+then
+	xinput set-prop "Genius EasyPen i405X" --type=float "Coordinate Transformation Matrix" 0.333333 0 0 0 1 0 0 0 1
+elif [ $1 = middle ]
+then
+	xinput set-prop "Genius EasyPen i405X" --type=float "Coordinate Transformation Matrix" 0.333333 0 0.333333 0 1 0 0 0 1
+elif [ $1 = right ]
+then
+	xinput set-prop "Genius EasyPen i405X" --type=float "Coordinate Transformation Matrix" 0.333333 0 0.666666 0 1 0 0 0 1
+fi

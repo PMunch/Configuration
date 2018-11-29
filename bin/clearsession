@@ -1,2 +1,0 @@
-#!/bin/bash
-rm "$HOME/.vim/sessions/$(pwd)/session.vim"

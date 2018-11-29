@@ -1,0 +1,1 @@
+ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -XC -c blowfish-cbc,arcfour pmu004@uvrocks.cs.uit.no

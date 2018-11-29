@@ -1,0 +1,14 @@
+#!/bin/sh
+OUTPUT=$(i3-msg -t get_workspaces | jq -r 'map(select(.focused))[0].output')
+FOCUSED=$(xprop -root _NET_ACTIVE_WINDOW | awk -F' ' '{print $NF}')
+FLAGS=(-show run -eh 2 -fake-transparency -hide-scrollbar -bw 0 -bg argb:99BFAB92 -fg "#403628" -hlbg "#403628" -hlfg "#BFAB92" -font "System Raleway UltraLight 18" -separator-style none)
+TFLAGS="rofi -show run -eh 2 -fake-transparency -hide-scrollbar -bw 0 -bg argb:99BFAB92 -fg '#403628' -hlbg '#403628' -hlfg '#BFAB92' -font 'System Raleway UltraLight 18' -separator-style none"
+if xprop -id ${FOCUSED} _NET_WM_STATE | grep -q "_NET_WM_STATE_FULLSCREEN"; then
+    rofi "${FLAGS[@]}" -lines 5 -fullscreen -padding 342
+else
+    if [ $OUTPUT == "DVI-1" ]; then
+        rofi "${FLAGS[@]}" -lines 16 -padding 333 -location 2 -width 100
+    else
+        rofi "${FLAGS[@]}" -lines 5 -padding 348 -location 2 -width 100
+    fi
+fi

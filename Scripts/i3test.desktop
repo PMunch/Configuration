@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=i3 Test
+Comment=Application for managing and playing games on Steam, using Steam bundled libraries
+Exec=i3-msg focus left
+Icon=steam
+Terminal=false
+Type=Application
+Categories=Network;FileTransfer;Game;
+MimeType=x-scheme-handler/steam;
+Actions=Store;Community;Library;Servers;Screenshots;News;Settings;BigPicture;Friends;

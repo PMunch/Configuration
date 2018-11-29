@@ -1,0 +1,12 @@
+if [ $1 = rotate-left ]
+then
+	#xrandr --output DFP12 --pos 0x0 --rotate right --output DFP11 --pos 1052x400 --primary --rotate normal --output DFP6 --pos 2736x400 --rotate normal
+	xrandr --output DVI-1 --pos 0x0 --rotate right --output DVI-0 --pos 1052x400 --primary --rotate normal --output DisplayPort-2 --pos 2736x400 --rotate normal
+elif [ $1 = rotate-none ]
+then
+	xrandr --output DVI-1 --pos 0x0 --rotate normal --output DVI-0 --pos 1680x0 --primary --rotate normal --output DisplayPort-2 --pos 3360x0 --rotate normal
+	#xrandr --output DFP6 --pos 0x0 --rotate normal --output DFP5 --pos 1680x0 --rotate normal --output DFP3 --pos 3360x0 --rotate normal
+	#xrandr --output DFP12 --rotate normal
+	#xrandr --output DFP12 --left-of DFP11
+	#xrandr --output DFP6 --right-of DFP11
+fi

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+TEMPERATURE0="$(cat /sys/devices/platform/coretemp.0/hwmon/hwmon0/temp2_input | cut -c-2)"
+TEMPERATURE1="$(cat /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp2_input | cut -c-2)"
+TEMPERATURE="$TEMPERATURE0$TEMPERATURE1"
+MAX=60
+MIN=35
+if [ "$TEMPERATURE" -lt "$MIN" ] ; then
+GRADIENT=0
+elif [ "$TEMPERATURE" -gt "$MAX" ] ; then
+GRADIENT=100
+else
+GRADIENT=$(bc<<<"scale=2;($TEMPERATURE - $MIN)*100/($MAX - $MIN)")
+fi
+let GREEN=$(bc<<<"178-(($GRADIENT*178)/100)")
+if [ $(printf "%.0f" "$GRADIENT") -lt 50 ] ; then
+let BLUE=$(bc<<<"255-($GRADIENT*255)/50")
+else
+BLUE=0
+fi
+if [ $(printf "%.0f" "$GRADIENT") -gt 80 ] ; then
+RED=144
+else
+let RED=$(bc<<<"65+($GRADIENT*95)/100")
+fi
+HEX=$(printf "%02x\n" $RED)$(printf "%02x\n" $GREEN)$(printf "%02x\n" $BLUE)
+echo '{ "full_text" : "    '"$TEMPERATURE"' °C  ", "color" : "\#'"$HEX"'" },'

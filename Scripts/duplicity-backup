@@ -1,0 +1,8 @@
+#!/bin/sh
+
+test -x $(which duplicity) || exit 0
+. /root/.passphrase
+
+export PASSPHRASE
+$(which duplicity) -vd --encrypt-key 1FC8D252 --exclude /media --exclude /mnt --exclude /run/media --exclude /run/mount --exclude /proc --exclude /sys --exclude /tmp / sftp://peterdesktop@serv.peterme.net//peterdesktop
+unset PASSPHRASE

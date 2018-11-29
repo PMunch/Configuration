@@ -12,14 +12,14 @@
 
 set background=dark
 if version > 580
-    " no guarantees for version 5.8 and below, but this makes it stop
-    " complaining
-    hi clear
-    if exists("syntax_on")
-        syntax reset
-    endif
+  " no guarantees for version 5.8 and below, but this makes it stop
+  " complaining
+  hi clear
+  if exists("syntax_on")
+  syntax reset
+  endif
 endif
-let g:colors_name="desert"
+let g:colors_name="arcdark"
 
 " Main
 hi Normal ctermfg=14 ctermbg=none
@@ -41,7 +41,5 @@ hi Delimiter ctermfg=1 cterm=italic
 
 hi Identifier ctermfg=2 cterm=bold
 
-" For tab highlighting
 hi SpecialKey ctermfg=239
-
 "vim: sw=4

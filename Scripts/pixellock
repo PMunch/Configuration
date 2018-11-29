@@ -1,0 +1,8 @@
+#!/bin/bash
+#ICON=$HOME/Scripts/lockicon.png
+TMPBG=/tmp/screen.png
+#scrot $TMPBG
+#convert $TMPBG -scale 10% -scale 1000% $TMPBG
+#convert $TMPBG $ICON -gravity center -composite -matte $TMPBG
+xwobf $TMPBG
+i3lock -p default -f -e -i $TMPBG

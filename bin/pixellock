@@ -1,4 +1,0 @@
-#!/bin/bash
-xwobf /tmp/.i3lock.png
-#pkill compton
-i3lock -n -e -f -i /tmp/.i3lock.png

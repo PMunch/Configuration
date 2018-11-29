@@ -1,2 +1,0 @@
-#!/bin/bash
-printf '\33]50;%s%d%s\007' "xft:InconsolataGo Nerd Font Mono:style=Regular:size=" $1 ",xft:Icons,xft:DejaVu Sans:style=Book"

@@ -1,7 +1,7 @@
 [global]
     #font = Cantarell 10
     #font = Raleway Thin 14
-    font = m+ p2 light 16
+    font = m+ p2 light 14
     #font = Inconsolata 12
     
     # Allow a small subset of html markup:
@@ -14,7 +14,7 @@
     # <http://developer.gnome.org/pango/stable/PangoMarkupFormat.html>.
     # If markup is not allowed, those tags will be stripped out of the
     # message.
-    markup = full
+    allow_markup = yes
     
     # The format of the message.  Possible variables are:
     #   %a  appname
@@ -68,7 +68,7 @@
     # the top and down respectevly.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "-50x0+25+-1"
+    geometry = "-50x0+25+25"
     
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
@@ -152,13 +152,11 @@
 
     # Paths to default icons.
     #icon_folders = /usr/share/icons/gnome/24x24/status/:/usr/share/icons/gnome/24x24/devices/
-    #icon_folders = /usr/share/icons/maia-dark/status-png/:/usr/share/icons/maia-dark/devices-png/
-    icon_folders = /usr/share/icons/breeze-dark/status/:/usr/share/icons/breeze-dark/devices/
-    max_icon_size = 24
+    icon_folders = /usr/share/icons/maia-dark/status-png/:/usr/share/icons/maia-dark/devices-png/
 
-#[frame]
-    frame_width = 1
-    frame_color = "#6d91ff"
+[frame]
+    width = 1
+    color = "#6d91ff"
 
 [shortcuts]
 
@@ -180,22 +178,18 @@
     history = ctrl+mod4+h 
     
     # Context menu.
-    context = ctrl+mod1+c
+    context = ctrl+alt+c
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    #background = "#6d91ff"
-    #foreground = "#403628"
-    background = "#2d303b"
-    foreground = "#6d91ff"
+    background = "#6d91ff"
+    foreground = "#403628"
     timeout = 5
 
 [urgency_normal]
-    #background = "#6d91ff"
-    #foreground = "#FFFFFF"
-    background = "#2d303b"
-    foreground = "#6d91ff"
+    background = "#6d91ff"
+    foreground = "#FFFFFF"
     timeout = 5
 
 [urgency_critical]
@@ -303,12 +297,7 @@
      category = weechat.PM
      background = "#D53B84"
      foreground = "#FFFFFF"
-
-[skype_urgency]
-     appname = Electron
-     format = "<i>Skype:</i> %s %p\n%b"
-     script = set-skype-urgency.sh
-
+#
 #[CMUS]
 #    appname = CMUS
 #    category = cmus

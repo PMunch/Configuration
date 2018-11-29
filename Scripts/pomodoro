@@ -1,0 +1,18 @@
+#!/bin/bash
+if [ "$1" == "break" ]; then
+  skip=true
+else
+  skip=false
+fi
+notify-send -a "Pomodoro" -i "battery" "Pomodoro timer started!"
+while [ 0 -lt 1 ]; do
+  if [ ! "$skip" == true ]; then
+    echo "Work started at `date +%T`"
+  	sleep 20m
+  	notify-send -a "Pomodoro" -i "battery" "Break time!"
+  fi
+  skip=false
+	echo "Break started at `date +%T`"
+	sleep 5m
+	notify-send -a "Pomodoro" -i "battery" "Back to work!"
+done

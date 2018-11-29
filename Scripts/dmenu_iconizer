@@ -1,0 +1,18 @@
+#!/bin/bash
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/dmenu-recent"
+recent_cache="$cache_dir/recent"
+rest_cache="$cache_dir/all"
+known_types=" background terminal terminal_hold "
+background="/home/peter/.config/dmenu-recent/background"
+terminal="/home/peter/.config/dmenu-recent/terminal"
+
+sedcom_b="/^\\($(cat $background | sed ':a;N;$!ba;s/\n/\\|/g')\\)/ s/^/    /"
+sedcom_t="/^\\($(cat $terminal | sed ':a;N;$!ba;s/\n/\\|/g')\\)/ s/^/    /"
+#eval $sedcom
+#echo "/^\\($(cat $background | sed 's//|/g')\\)/ s/^/test /"
+#echo $(cat "$recent_cache" | sed '/^\(chromium\|pcmanfm\)/ s/^/test /')
+out=$(cat "$recent_cache" "$rest_cache" | sed "$sedcom_t" | sed "$sedcom_b" | sed '/^[^ ]/ s/^/   /' | rofi -dmenu "$@" | sed 's/^[ ]\+//')
+#t=$(echo "$out" | sed 's/^[ ]\+//')
+echo "$out"
+#echo $(cat "$recent_cache" "$rest_cache" | sed 's/^/  /')

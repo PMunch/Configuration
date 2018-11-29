@@ -1,0 +1,14 @@
+if [ $1 = rotate-left ]
+then
+	xrandr --output DFP6 --pos 0x0 --rotate right --output DFP5 --pos 1052x400 --primary --rotate normal --output DFP3 --pos 2734x400 --rotate normal
+elif [ $1 = rotate-middle ]
+then
+	xrandr --output DFP6 --pos 0x0 --rotate normal --output DFP5 --pos 1680x-400 --rotate right --output DFP3 --pos 2730x0 --rotate normal
+elif [ $1 = rotate-right ]
+then
+	xrandr --output DFP6 --pos 0x0 --rotate normal --output DFP5 --pos 1680x0 --rotate normal --output DFP3 --pos 3360x-400 --rotate right
+
+elif [ $1 = rotate-none ]
+then
+	xrandr --output DFP6 --pos 0x0 --rotate normal --output DFP5 --pos 1680x0 --rotate normal --output DFP3 --pos 3360x0 --rotate normal
+fi
