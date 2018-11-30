@@ -1,6 +1,6 @@
 !URxvt.font: 9x15
 !URxvt.font: xft:Inconsolata for Powerline:size=14,xft:FontAwesome,xft:Icons,xft:DejaVu Sans Mono:style=Book
-URxvt.font: xft:InconsolataGo Nerd Font Mono:style=Regular:size=15,xft:Icons,xft:DejaVu Sans:style=Book
+URxvt.font: xft:InconsolataGo Nerd Font:style=Regular:size=15,xft:Icons,xft:DejaVu Sans:style=Book
 Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
