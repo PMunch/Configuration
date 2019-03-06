@@ -2,6 +2,7 @@
 here=$(cd `dirname $0` && pwd)
 copy_config() {
   if ! [[ "$1" =~ .*".swp"$ ]] &&
+     ! [[ "$1" =~ ^"$here/.git".* ]] &&
      ! [[ "$1" =~ .*"grab_config.sh"$ ]] &&
      ! [[ "$1" =~ .*"remove_config.sh"$ ]] &&
      ! [[ "$1" =~ .*"install_config.sh"$ ]]; then
@@ -9,8 +10,12 @@ copy_config() {
     echo "$here"
     if [[ "$backup" =~ ^"$here".* ]]; then
       config="$HOME/${backup#"$here"}"
-      mkdir -p "$(dirname "$here/backup/${backup#"$here"}")" &&
-      mv "$config" "$here/backup/${backup#"$here"}" &&
+      echo "Should link $config to $backup"
+      if [[ -f "$config" ]]; then
+        echo "$config exists"
+        mkdir -p "$(dirname "$here/backup/${backup#"$here"}")" &&
+        mv "$config" "$here/backup/${backup#"$here"}"
+      fi
       ln -s "$backup" "$config" &&
       echo "Succesfully copied and linked config file" ||
       (echo "Unable to copy and link file!"; exit 4)
@@ -21,4 +26,4 @@ copy_config() {
   fi
 };
 export -f copy_config;
-find "$here" -type f -not -path "./.git/*" -exec bash -c 'here='$here'; copy_config "$0"' {} \;
+find "$here" -type f -exec bash -c 'here='$here'; copy_config "$0"' {} \;

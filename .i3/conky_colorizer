@@ -25,13 +25,13 @@ while read teststring; do
 	BATTERY="${teststring#*BATTERYCOLOUR}"
 	BATTERY="${BATTERY%%!*}"
 
-	CPU_HEX=$(Colour 0 20 $CPU)
+	CPU_HEX=$(Colour 0 70 $CPU)
 	MEM_HEX=$(Colour 10 100 $MEMORY)
 	TEM_HEX=$(Colour 40 90 $TEMPERATURE)
 	BAT_HEX=$(Colour 15 100 $(bc<<<"100-$BATTERY"))
 
 
-	teststring="${teststring/CPUCOLOUR/#$CPU_HEX}"
+	teststring="${teststring/CPUCOLOUR$CPU!/#$CPU_HEX}"
 	teststring="${teststring/MEMCOLOUR$MEMORY!/#$MEM_HEX}"
 	teststring="${teststring/TEMPERATURECOLOUR $TEMPERATURE!/#$TEM_HEX}"
 	teststring="${teststring/BATTERYCOLOUR$BATTERY!/#$BAT_HEX}"

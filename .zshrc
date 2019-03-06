@@ -13,7 +13,7 @@ compinit
 # Copied from .bashrc
 export JAVA_FONTS=/usr/share/fonts/TTF
 export EDITOR=/usr/bin/vim
-export BROWSER=/usr/bin/vivaldi
+export BROWSER=/usr/bin/vivaldi-stable
 export MAN_POSIXLY_CORRECT=1
 
 eval "$(dircolors $HOME/.dircolors)"
@@ -93,7 +93,7 @@ last_error() {
 }
 
 setopt prompt_subst
-PROMPT='$(last_error)%F{2}[%n %B%F{4}%~%F{2}%b$(parse_git_branch) ] %B$%b%f '
+PROMPT='$(last_error)%F{2}[%n %B%F{4}%~%F{2}%b$(parse_git_branch) ] %B$%b%f %{%}'
 setopt correctall
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select=1

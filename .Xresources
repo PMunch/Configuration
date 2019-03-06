@@ -1,6 +1,7 @@
 !URxvt.font: 9x15
-!URxvt.font: xft:Inconsolata for Powerline:size=14,xft:FontAwesome,xft:Icons,xft:DejaVu Sans Mono:style=Book
-URxvt.font: xft:InconsolataGo Nerd Font:style=Regular:size=15,xft:Icons,xft:DejaVu Sans:style=Book
+!URxvt.font: xft:Inconsolata:style=Regular:size=12, xft:Icons:style=Regular, xft:DejaVu Sans Mono
+URxvt.font: xft: InconsolataForPowerline Nerd Font:style=Medium:size=14, xft: DejaVu Sans:size=10
+URxvt.letterSpace: 0
 Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
@@ -19,18 +20,12 @@ URxvt*mouseWheelScrollPage:           false
 URxvt*cursorBlink:                    true
 URxvt*foreground:                     #ebdbb2
 URxvt*saveLines:                      5000
-URxvt.keysym.C-Page_Up:               \033[5;5~
-URxvt.keysym.C-Page_Down:             \033[6;5~
-
 URxvt*urgentOnBell: true
-URxvt.perl-ext-common: default,keyboard-select,selection-autotransform
-URxvt.keysym.C-Escape: perl:keyboard-select:activate
-URxvt.selection-autotransform.0: s/^([^:[:space:]]+):(\\d+):(\\d+): (.+)/vim +$2 +'norm $3|' +'redraw|echom "$4"' \\Q$1\\E\\x0d/
-URxvt.selection-autotransform.1: s/^([^:[:space:]]+):(\\d+):(\\d+):?/vim +$2 +'norm $3|'\\Q$1\\E\\x0d/
-URxvt.selection-autotransform.2: s/^([^([:space:]]+)\\((\\d+), (\\d+)\\) (.+)/vim +$2 +'norm $3|' +'redraw|echom "$4"' \\Q$1\\E\\x0d/
-URxvt.selection-autotransform.3: s/^([^([:space:]]+)\\((\\d+), (\\d+)\\)/vim +$2 +'norm $3|' \\Q$1\\E\\x0d/
+
 ! Copy pasting
-!URxvt.perl-ext-common: default,clipboard
+URxvt.perl-lib: /home/peter/.urxvt/ext/
+URxvt.perl-ext-common: default,keyboard-select
+URxvt.keysym.C-Escape: perl:keyboard-select:activate
 !URxvt.iso14755: False
 !URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 !URxvt.keysym.Shift-Control-V: perl:clipboard:paste
@@ -186,39 +181,4 @@ rofi.line-margin: 25
 ! URxvt*tabbar-fg:                      colour
 ! URxvt*url-launcher:                   string
 
-! special
-*.foreground:   #b3bdcb
-*.background:   #404552
-*.cursorColor:  #b3bdcb
-
-! black
-*.color0:       #404552
-*.color8:       #2a303b
-
-! red
-*.color1:       #e74c3c
-*.color9:       #cc575d
-
-! green
-*.color2:       #6d91ff
-*.color10:      #75a9e8
-
-! yellow
-*.color3:       #d28445
-*.color11:      #f4bf75
-
-! blue
-*.color4:       #6a9fb5
-*.color12:      #75b5aa
-
-! magenta
-*.color5:       #aa649b
-*.color13:      #aa759f
-
-! cyan
-*.color6:       #89a942
-*.color14:      #afd787
-
-! white
-*.color7:       #e1e5ea
-*.color15:      #ffffff
+#include ".Xresources-colours"
