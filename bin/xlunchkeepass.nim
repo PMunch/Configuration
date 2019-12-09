@@ -1,8 +1,9 @@
 #!/usr/bin/env nimcr
 import streams, strutils
 import xmltree, xmlparser
-import keepass
+import libkeepass
 import osproc
+import base64
 
 template output(s: untyped) =
   discard execProcess("notify-send -u critical -a \"xlunch Keepass\" -i /usr/share/icons/papirus-arc-dark/48x48/apps/keepass2.svg \"" & s & "\"")
@@ -10,25 +11,26 @@ template output(s: untyped) =
 
 let
   pw = execProcess("zenity --password", options = {poUsePath, poEvalCommand})
-  s = newFileStream("/home/peter/spacetec_2.kdbx", fmRead)
+  s = newFileStream("/home/peter/passwords.kdbx", fmRead)
 if pw[0..^2] == "":
   output("No password entered!")
   quit 1
 try:
   let
     db = readDatabase(s, pw[0..^2])
+  echo "DB read"
   var
     passwords: seq[tuple[title, password: string]] = @[]
   for xml in db:
     for group in xml.child("Root"):
-      var path = ""
       proc parseGroup(group: XmlNode, path: string) =
         let name =
           if group.child("Name") == nil:
             ""
           else:
             if group.child("Name").innerText != "Root":
-              group.child("Name").innerText & "  "
+              #group.child("Name").innerText & "  "
+              group.child("Name").innerText & " > "
             else:
               ""
         if group.tag == "Group":
@@ -64,10 +66,13 @@ try:
       parseGroup(group, "")
   var entries = ""
   for entry in passwords:
-    entries = entries & entry.title & ";/usr/share/xlunch/svgicons/keepassx.png;" & entry.password & "\n"
+    entries = entries & entry.title & ";/usr/share/xlunch/svgicons/keepassxc.png;" & encode(entry.password) & "\n"
   entries = entries.multiReplace(("\"","\\\""),("$","\\$"))[0..^2]
   let chosen = execProcess("echo \"" & entries & "\" | xlunch-menu --prompt \"Entry: \"")
-  discard execProcess("xdotool type \"" & chosen.multiReplace(("\"","\\\""),("$","\\$"))[0..^2] & "\"")
+  #echo chosen
+  #echo NimVersion
+  #echo decode(chosen).multiReplace(("\"","\\\""),("$","\\$"))[0..^2]
+  discard execProcess("xdotool type \"" & decode(chosen.multiReplace(("\"","\\\""),("$","\\$"))[0..^2]) & "\"")
 except DecryptionException:
   output("Unable to decrypt database, wrong password?")
   quit 1

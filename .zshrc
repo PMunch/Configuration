@@ -2,6 +2,8 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+
+setopt interactivecomments
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -15,6 +17,8 @@ export JAVA_FONTS=/usr/share/fonts/TTF
 export EDITOR=/usr/bin/vim
 export BROWSER=/usr/bin/vivaldi-stable
 export MAN_POSIXLY_CORRECT=1
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export XLUNCHICONSIZE=96
 
 eval "$(dircolors $HOME/.dircolors)"
 
@@ -87,13 +91,26 @@ export PATH=$PATH:/home/peter/.nimble/bin
 parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
+
+parse_git_status() {
+  if [ -z "$(git rev-parse --git-dir 2> /dev/null)" ]; then
+     echo ""
+  else
+    if [ $(git status -s -uno 2> /dev/null | wc -l) -eq "0" ]; then
+      echo " ✓"
+    else
+      echo " ✗"
+    fi
+  fi
+}
+
 last_error() {
   es=$?
   [[ $es -eq 0 ]] && echo "" || echo -e "%F{1}▐%f%K{1}$es%k%F{1}▋%f"
 }
 
 setopt prompt_subst
-PROMPT='$(last_error)%F{2}[%n %B%F{4}%~%F{2}%b$(parse_git_branch) ] %B$%b%f %{%}'
+PROMPT='$(last_error)%F{2}[%n %B%F{4}%~%F{2}%b$(parse_git_branch)$(parse_git_status) ] %h %B$%b%f %{%}'
 setopt correctall
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select=1

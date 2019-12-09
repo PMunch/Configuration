@@ -6,6 +6,6 @@ export BROWSER=/usr/bin/vivaldi-stable
 export PATH=/home/peter/.nimble/bin:$PATH
 export PATH=/home/peter/Scripts:$PATH
 
-#setxkbmap 'no(dvorak)' -option "caps:swapescape"
-xmodmap .Xmodmap
-xcape -e 'Control_L=Escape;Super_L=Tab'
+if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+  exec startx
+fi

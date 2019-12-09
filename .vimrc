@@ -25,7 +25,7 @@ Plugin 'zah/nim.vim'
 "Plugin 'baabelfish/nvim-nim'
 Plugin 'scrooloose/syntastic'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ap/vim-css-color'
 Plugin 'Yggdroot/indentLine'
 Plugin 'kana/vim-textobj-user'
@@ -37,6 +37,8 @@ Plugin 'prabirshrestha/asyncomplete.vim'
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
 Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+Plugin 'amadeus/vim-mjml'
+Plugin 'OmniSharp/omnisharp-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -82,7 +84,7 @@ nnoremap <PageDown> <C-d>
 nnoremap <PageUp> <C-u>
 
 " Use Ctrl-D fol multi cursor select like in Sublime
-let g:multi_cursor_next_key='<C-d>'
+" let g:multi_cursor_next_key='<C-d>'
 
 " Enable Ctrl-N to toggle relative numbers
 nmap <C-N> :set relativenumber!<CR>
@@ -128,7 +130,7 @@ let g:indentLine_color_term = 239
 let g:indentLine_char = '│'
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_first_char = '│'
-" let g:indentLine_conceallevel = 1
+" let g:indentLine_conceallevel = 0
 " let g:vim_json_syntax_conceal = 0
 
 " Make expand to region consider both inside and outside of a region a region
@@ -223,8 +225,9 @@ endif
 :highlight ExtraWhitespace ctermbg=red guibg=red
 :match ExtraWhitespace /\s\+$/
 
-" Highlight column 80
-set colorcolumn=80
+" Highlight column 80, and 128 (GitHub cutoff)
+let &colorcolumn="80,128"
+highlight ColorColumn ctermbg=52
 
 " Remove annoying bell
 set noerrorbells visualbell t_vb=
@@ -253,3 +256,4 @@ inoremap <silent><expr> <TAB>
   \ <SID>check_back_space() ? "\<TAB>" :
   \ asyncomplete#force_refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+

@@ -88,10 +88,17 @@ export PATH=$PATH:/home/peter/.nimble/bin
 #PS1='\[\e[1;32m\][\u@\h \W]\$\[\e[0m\] '
 #PS1="\[\033[01;37m\]\$(if [[ \$? == 0 ]]; then echo \"\[\033[01;32m\]0\"; else echo \"\[\033[01;31m\]\$?\"; fi) $(if [[ ${EUID} == 0 ]]; then echo '\[\033[01;31m\]\h'; else echo '\[\033[01;32m\]\u@\h'; fi)\[\033[01;34m\] \w \$\[\033[00m\] "
 parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+parse_git_status() {
+  if [ $(git status -s -uno 2> /dev/null | wc -l) -eq "0" ]; then
+    "✓"
+  else
+    "✗"
+  fi
 }
 
-PS1='\[\007\e[0;32m\][\u \[\e[1;34m\]\w\[\e[0;32m\]$(parse_git_branch) ]\n\[\e[1;32m\]\$ \[\e[0m\]'
+PS1='\[\007\e[0;32m\][\u \[\e[1;34m\]\w\[\e[0;32m\]$(parse_git_branch) $(parse_git_status) ]\n\[\e[1;32m\]\$ \[\e[0m\]'
 PROMPT_COMMAND='es=$?; [[ $es -eq 0 ]] && unset error || error=$(echo -e " $es ")'
 PS1="\[\e[1;41m\]\$error\[\e[0m\]${PS1}"
 

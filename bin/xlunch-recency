@@ -14,9 +14,9 @@ fi
 
 focused=$(xprop -root _NET_ACTIVE_WINDOW | grep -o "[0-9a-fx]*$")
 if xprop -id $focused | grep -q "_NET_WM_STATE_FULLSCREEN"; then
-	xlunch_cmd="xlunch --config $HOME/.config/xlunch/system.conf -U "1234567890" -S -a -c $columns -r $rows -b 250 -B 300 -o -i $output_file"
+	xlunch_cmd="xlunch --config $HOME/.config/xlunch/system.conf -U "1234567890" -S -a -c $columns -r $rows -b 550 -B 600 -o -i $output_file"
 else
-	xlunch_cmd="xlunch --config $HOME/.config/xlunch/system.conf -U "1234567890" -S -a -c $columns -r $rows -b 250 -B 300 -W -w $width -h $height -o -i $output_file"
+	xlunch_cmd="xlunch --config $HOME/.config/xlunch/system.conf -U "1234567890" -S -a -c $columns -r $rows -b 550 -B 600 -W -w $width -h $height -o -i $output_file"
 fi
 
 echo $xlunch_cmd

@@ -1,2 +1,3 @@
 #!/bin/bash
-printf '\33]50;%s%d%s\007' "xft:InconsolataGo Nerd Font Mono:style=Regular:size=" $1 ",xft:Icons,xft:DejaVu Sans:style=Book"
+printf '\33]50;%s%d%s\007' "xft:InconsolataForPowerline Nerd Font:style=Medium:size=" $1 ", xft: DejaVu Sans:size=10"
+
