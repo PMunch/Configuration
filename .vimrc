@@ -75,6 +75,8 @@ set tabstop=2
 set softtabstop=2 expandtab
 set shiftwidth=2
 
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
+autocmd FileType cs setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
 autocmd FileType c setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 " Remap PgUp and PgDown to something not so drastic, keep default as an aption
@@ -257,3 +259,13 @@ inoremap <silent><expr> <TAB>
   \ asyncomplete#force_refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+let g:OmniSharp_start_server = 0
+autocmd FileType cs ++once OmniSharpStartServer .
+" autocmd FileType cs autocmd BufWritePre * OmniSharpFixUsings
+" let g:OmniSharp_proc_debug = 1
+" let g:OmniSharp_loglevel = 'debug'
+let g:OmniSharp_server_stdio = 1
+let g:OmniSharp_server_type = 'roslyn'
+
+nmap <leader>f :OmniSharpCodeFormat<cr>
+nmap <leader>u :OmniSharpFixUsings<cr>

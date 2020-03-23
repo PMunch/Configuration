@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/zsh
+source ~/.zshrc
+
 which $1
 type $1
-file $(which $1)
+if [ -f "$(which $1)" ]; then
+  file $(which $1)
+fi

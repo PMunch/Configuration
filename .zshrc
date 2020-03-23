@@ -58,6 +58,8 @@ alias cdg='cd $(git rev-parse --show-toplevel)'
 alias build='~/work/meos-pph/meos-pph/dev/vagrant/scripts/build'
 alias deploy='~/work/meos-pph/meos-pph/dev/vagrant/scripts/deploy'
 alias build-and-deploy='~/work/meos-pph/meos-pph/dev/vagrant/scripts/build-and-deploy'
+alias dockbuild='docker build --iidfile /tmp/last .'
+alias gitroot='git rev-parse --show-toplevel'
 #eval $(thefuck --alias)
 
 # ex - archive extractor
@@ -86,6 +88,8 @@ ex ()
 }
 
 export PATH=$PATH:/home/peter/.nimble/bin
+export PATH=$PATH:/opt/dotnet
+export DOTNET_ROOT=/opt/dotnet
 
 # Modified for zsh
 parse_git_branch() {

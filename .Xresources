@@ -19,13 +19,17 @@ URxvt*scrollBar:                      false
 URxvt*mouseWheelScrollPage:           false
 URxvt*cursorBlink:                    true
 URxvt*foreground:                     #ebdbb2
-URxvt*saveLines:                      5000
+URxvt*saveLines:                      50000
 URxvt*urgentOnBell: true
 
 ! Copy pasting
 URxvt.perl-lib: /home/peter/.urxvt/ext/
 URxvt.perl-ext-common: default,keyboard-select
 URxvt.keysym.C-Escape: perl:keyboard-select:activate
+! Scrolling
+URxvt*scrollTtyOutput:      false
+URxvt*scrollWithBuffer:     true
+URxvt*scrollTtyKeypress:    true
 !URxvt.iso14755: False
 !URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 !URxvt.keysym.Shift-Control-V: perl:clipboard:paste
