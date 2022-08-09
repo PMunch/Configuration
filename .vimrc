@@ -224,7 +224,8 @@ endif
 :match ExtraWhitespace /\s\+$/
 
 " Highlight column 80
-set colorcolumn=80
+set colorcolumn=81,121
+highlight ColorColumn ctermbg=88
 
 " Remove annoying bell
 set noerrorbells visualbell t_vb=

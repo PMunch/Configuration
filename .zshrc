@@ -54,6 +54,8 @@ alias cdg='cd $(git rev-parse --show-toplevel)'
 alias build='~/work/meos-pph/meos-pph/dev/vagrant/scripts/build'
 alias deploy='~/work/meos-pph/meos-pph/dev/vagrant/scripts/deploy'
 alias build-and-deploy='~/work/meos-pph/meos-pph/dev/vagrant/scripts/build-and-deploy'
+alias wifipw='sudo grep -r "^psk=" /etc/NetworkManager/system-connections/'
+
 #eval $(thefuck --alias)
 
 # ex - archive extractor
